@@ -1,0 +1,37 @@
+name: Build iOS IPA
+on:
+push:
+branches: [ "main", "master" ]
+workflow_dispatch:
+jobs:
+build-ipa:
+runs-on: macos-14
+steps:
+- name: Скачивание репозитория
+uses: actions/checkout@v4
+- name: Установка XcodeGen
+run: brew install xcodegen
+- name: Генерация Xcode проекта
+run: xcodegen generate
+- name: Сборка приложения (Release + Оптимизация)
+run: |
+xcodebuild -project LiquidAudio.xcodeproj 
+-scheme LiquidAudio 
+-configuration Release 
+-derivedDataPath build 
+-sdk iphoneos 
+CODE_SIGN_IDENTITY="" 
+CODE_SIGNING_REQUIRED=NO 
+CODE_SIGNING_ALLOWED=NO 
+SWIFT_OPTIMIZATION_LEVEL="-O" 
+clean build
+- name: Упаковка в .ipa
+run: |
+mkdir -p Payload
+cp -r build/Build/Products/Release-iphoneos/LiquidAudio.app Payload/
+zip -r9 LiquidAudio.ipa Payload
+- name: Выгрузка готового .ipa файла
+uses: actions/upload-artifact@v4
+with:
+name: LiquidAudio-iPhone14Pro-IPA
+path: LiquidAudio.ipa
