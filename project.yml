@@ -1,0 +1,35 @@
+name: LiquidAudio
+options:
+bundleIdPrefix: com.iphone14pro
+deploymentTarget:
+iOS: "16.0"
+targets:
+LiquidAudio:
+type: application
+platform: iOS
+sources:
+- LiquidAudioApp.swift
+info:
+path: Info.plist
+properties:
+CFBundleDisplayName: LiquidAudio
+UILaunchScreen: {}
+# Разрешает работу музыки в фоне, в шторке уведомлений и в Dynamic Island
+UIBackgroundModes:
+- audio
+# Включает 120 Гц ProMotion анимации для iPhone 14 Pro и выше
+CADisableMinimumFrameDurationOnPhone: true
+# Разрешает доступ к скачанным файлам напрямую
+UIFileSharingEnabled: true
+LSSupportsOpeningDocumentsInPlace: true
+UISupportedInterfaceOrientations:
+- UIInterfaceOrientationPortrait
+settings:
+base:
+PRODUCT_BUNDLE_IDENTIFIER: com.liquidglass.audioplayer
+MARKETING_VERSION: 1.0.0
+CURRENT_PROJECT_VERSION: 1
+SWIFT_VERSION: 5.0
+CODE_SIGN_IDENTITY: ""
+CODE_SIGNING_REQUIRED: NO
+CODE_SIGNING_ALLOWED: NO
